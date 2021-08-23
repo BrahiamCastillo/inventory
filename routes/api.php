@@ -19,8 +19,16 @@ use Illuminate\Support\Facades\Route;
 
 }); */
 
+//Rutas de productos
 Route::get('/productos', 'ProductoController@index');
 Route::get('/producto', 'ProductoController@show');
 Route::post('/agregarProducto', 'ProductoController@create');
 
+//Rutas de establecimientos
 Route::get('/establecimientos','EstablecimientoController@index');
+Route::get('/establecimiento','EstablecimientoController@show');
+
+//Rutas de empleados
+Route::get('/empleados', 'EmpleadosController@index');
+Route::get('/empleado', 'EmpleadosController@show');
+Route::post('/registrarEmpleado', 'EmpleadosController@store');

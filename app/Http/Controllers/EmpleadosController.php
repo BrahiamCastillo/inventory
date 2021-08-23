@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Establecimiento;
+use App\Empleado;
 use Illuminate\Http\Request;
 
-class EstablecimientoController extends Controller
+class EmpleadosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,8 @@ class EstablecimientoController extends Controller
      */
     public function index()
     {
-        return Establecimiento::with('tipo_establecimiento', 'productos')->get();
+        //
+        return Empleado::with('rol_empleado', 'establecimiento')->get();
     }
 
     /**
@@ -26,6 +27,16 @@ class EstablecimientoController extends Controller
     public function store(Request $request)
     {
         //
+        if($request->input('type') === 'agregarempleado') {
+
+            $nombre = $request->input('nombre');
+            $rolEmpleado = $request->input('rol_empleado');
+            $establecimiento = $request->input('establecimiento');
+            $newEmpleado = Empleado::create(['nombre' => $nombre,
+            'rol_empleados_id' => $rolEmpleado,
+            'establecimiento_id' => $establecimiento]);
+            return $newEmpleado;
+        }
     }
 
     /**
@@ -36,7 +47,7 @@ class EstablecimientoController extends Controller
      */
     public function show(Request $request)
     {
-        return Establecimiento::where('id',$request->input('id'))->with('tipo_establecimiento', 'productos')->get();
+        return Empleado::where('id',$request->input('id'))->with('rol_empleado', 'establecimiento')->get();
     }
 
     /**
@@ -61,17 +72,4 @@ class EstablecimientoController extends Controller
     {
         //
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-  /*  public function productos_establecimientos(Request $request)
-    {
-        //
-        return Establecimiento::
-    }*/
 }

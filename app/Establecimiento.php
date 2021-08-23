@@ -10,6 +10,10 @@ class Establecimiento extends Model
     protected $table = 'establecimiento';
 
     public function tipo_establecimiento() {
-        return $this->belongsTo(Tipo_establecimiento::class,'id');
+        return $this->belongsTo(Tipo_establecimiento::class,'tipos_establecimientos_id');
+    }
+
+    public function productos() {
+        return $this->hasMany(Productos_Establecimiento::class, 'establecimientos_id');
     }
 }
