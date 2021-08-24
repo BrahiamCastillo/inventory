@@ -32,9 +32,11 @@ class EmpleadosController extends Controller
             $nombre = $request->input('nombre');
             $rolEmpleado = $request->input('rol_empleado');
             $establecimiento = $request->input('establecimiento');
-            $newEmpleado = Empleado::create(['nombre' => $nombre,
-            'rol_empleados_id' => $rolEmpleado,
-            'establecimiento_id' => $establecimiento]);
+            $newEmpleado = new Empleado;
+            $newEmpleado->nombre = $nombre;
+            $newEmpleado->rol_empleados_id = $rolEmpleado;
+            $newEmpleado->establecimiento_id = $establecimiento;
+            $newEmpleado->save();
             return $newEmpleado;
         }
     }
@@ -57,19 +59,51 @@ class EmpleadosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+
+        if($request->input('type') === 'editarempleado') {
+
+            $nombre = $request->input('nombre');
+            $rolEmpleado = $request->input('rol_empleado');
+            $establecimiento = $request->input('establecimiento');
+            $newEmpleado = Empleado::find($request->input('id'));
+            $newEmpleado->nombre = $nombre;
+            $newEmpleado->rol_empleados_id = $rolEmpleado;
+            $newEmpleado->establecimiento_id = $establecimiento;
+            $newEmpleado->save();
+            return $newEmpleado;
+        } else {
+
+            return response()->json([
+                'status' => 'Mal update',
+            ]);
+        }
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        if($request->input('type') === 'eliminarempleado') {
+
+            $empleado = Empleado::find($request->input('id'));
+            $empleado->delete();
+            return response()->json([
+                'status' => 'Exitoso',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'Mal Delete',
+            ]);
+        }
     }
 }

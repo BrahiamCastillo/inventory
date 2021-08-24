@@ -32,3 +32,5 @@ Route::get('/establecimiento','EstablecimientoController@show');
 Route::get('/empleados', 'EmpleadosController@index');
 Route::get('/empleado', 'EmpleadosController@show');
 Route::post('/registrarEmpleado', 'EmpleadosController@store');
+Route::put('/editarEmpleado', 'EmpleadosController@update');
+Route::delete('eliminarEmpleado', 'EmpleadosController@destroy');
